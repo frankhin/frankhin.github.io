@@ -1,6 +1,68 @@
-body{margin:0;background:#0b0b0d;color:#fff;font-family:Arial,sans-serif}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem}
-h1{font-size:4rem;font-weight:300;letter-spacing:4px}
-.btn{color:#fff;border:1px solid #888;padding:.8rem 1.4rem;border-radius:999px;text-decoration:none}
-.card{max-width:700px;margin:2rem auto;padding:2rem;border:1px solid #333;border-radius:16px}
-footer{text-align:center;padding:3rem;color:#bbb}
+html,
+body{
+    margin:0;
+    height:100%;
+    overflow:hidden;
+    background:#02040f;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+#stars{
+    position:fixed;
+    inset:0;
+}
+
+#intro,
+#universe{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    z-index:1;
+}
+
+.hidden{
+    display:none !important;
+}
+
+h1{
+    font-size:4rem;
+    letter-spacing:8px;
+    text-shadow:0 0 20px #88aaff;
+}
+
+button{
+    margin-top:25px;
+    padding:14px 30px;
+    border:none;
+    border-radius:30px;
+    background:#4f7cff;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:20px;
+    width:min(900px,90%);
+    margin-top:40px;
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:20px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    background:rgba(255,255,255,.15);
+}

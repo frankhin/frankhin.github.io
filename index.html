@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Frankhin</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frankhin's Universe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="stars"></div>
-<main class="hero">
-<h1>Frankhin</h1>
-<p class="lead">You found my website.</p>
-<p>There's not much here yet…</p>
-<p>…but you came this far, so thanks for visiting.</p>
-<a class="btn" href="#more">Keep Exploring</a>
-</main>
 
-<section id="more" class="card">
-<h2>Things I'm Exploring</h2>
-<ul>
-<li>Curiosity</li>
-<li>Learning</li>
-<li>Creating</li>
-<li>Ideas worth building</li>
-</ul>
-</section>
+<canvas id="stars"></canvas>
 
-<footer>
-<p>Thanks for stopping by.</p>
-<p>Come back later. It might be more interesting.</p>
-</footer>
+<div id="intro">
+    <h1>FRANKHIN</h1>
+    <p>Welcome, traveler.</p>
+    <button id="begin">Begin Exploration</button>
+</div>
+
+<div id="universe" class="hidden">
+    <h2>🌌 Frankhin's Universe</h2>
+
+    <div class="grid">
+        <div class="card">
+            🎮 Games
+            <br>
+            <small>Coming Soon</small>
+        </div>
+
+        <div class="card">
+            💡 Ideas
+        </div>
+
+        <div class="card">
+            🌠 Secrets
+        </div>
+
+        <div class="card">
+            🚀 Projects
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>

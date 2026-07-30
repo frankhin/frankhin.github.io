@@ -1,0 +1,6 @@
+body{margin:0;background:#0b0b0d;color:#fff;font-family:Arial,sans-serif}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem}
+h1{font-size:4rem;font-weight:300;letter-spacing:4px}
+.btn{color:#fff;border:1px solid #888;padding:.8rem 1.4rem;border-radius:999px;text-decoration:none}
+.card{max-width:700px;margin:2rem auto;padding:2rem;border:1px solid #333;border-radius:16px}
+footer{text-align:center;padding:3rem;color:#bbb}

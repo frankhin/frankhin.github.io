@@ -1,46 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frankhin's Universe</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Frankhin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="stars"></canvas>
+  <!-- Persistent space canvas backdrop -->
+  <canvas id="space-canvas"></canvas>
 
-<div id="intro">
-    <h1>FRANKHIN</h1>
-    <p>Welcome, traveler.</p>
-    <button id="begin">Begin Exploration</button>
-</div>
+  <!-- Mute toggle, always available once inside -->
+  <button id="mute-toggle" class="hud-btn hidden" aria-label="Toggle sound">🔇</button>
 
-<div id="universe" class="hidden">
-    <h2>🌌 Frankhin's Universe</h2>
-
-    <div class="grid">
-        <div class="card">
-            🎮 Games
-            <br>
-            <small>Coming Soon</small>
-        </div>
-
-        <div class="card">
-            💡 Ideas
-        </div>
-
-        <div class="card">
-            🌠 Secrets
-        </div>
-
-        <div class="card">
-            🚀 Projects
-        </div>
+  <!-- ============ LANDING ============ -->
+  <section id="landing" class="scene">
+    <div class="landing-content">
+      <h1 id="title" class="title">FRANKHIN</h1>
+      <p id="subtitle" class="subtitle">Welcome, traveler.</p>
+      <button id="begin-btn" class="begin-btn">Begin Exploration</button>
     </div>
-</div>
+  </section>
 
-<script src="script.js"></script>
+  <!-- ============ UNIVERSE (celestial nav) ============ -->
+  <section id="universe" class="scene hidden">
+    <div id="celestial-field"></div>
+    <div class="return-hint hidden" id="return-hint">Press <span>Esc</span> or tap a star to return</div>
+  </section>
 
+  <!-- ============ GAMES ============ -->
+  <section id="view-games" class="scene overlay hidden">
+    <button class="back-btn">← Return to the universe</button>
+    <div class="section-inner games-inner">
+      <h2 class="section-title">Games</h2>
+      <p class="section-sub">A small diversion, built for the void.</p>
+      <div id="astro-runner-mount"></div>
+    </div>
+  </section>
+
+  <!-- ============ IDEAS ============ -->
+  <section id="view-ideas" class="scene overlay hidden">
+    <button class="back-btn">← Return to the universe</button>
+    <div class="section-inner">
+      <h2 class="section-title">Ideas</h2>
+      <p class="section-sub">Fragments of thought, still burning.</p>
+      <div id="idea-field" class="idea-field"></div>
+    </div>
+    <div id="idea-detail" class="idea-detail hidden">
+      <button id="idea-close" class="close-x" aria-label="Close">×</button>
+      <h3 id="idea-detail-title"></h3>
+      <p id="idea-detail-body"></p>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="view-projects" class="scene overlay hidden">
+    <button class="back-btn">← Return to the universe</button>
+    <div class="section-inner">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">Worlds under construction.</p>
+      <div id="project-field" class="project-field"></div>
+    </div>
+  </section>
+
+  <!-- ============ SECRETS ============ -->
+  <section id="view-secrets" class="scene overlay hidden">
+    <button class="back-btn">← Return to the universe</button>
+    <div class="section-inner secrets-inner">
+      <h2 class="section-title">Hidden Secrets</h2>
+      <p class="section-sub">Some things are not shown. They are found.</p>
+      <p class="secrets-hint">Somewhere in this universe, a sequence of keys opens a door.</p>
+    </div>
+  </section>
+
+  <!-- Konami-code style secret modal -->
+  <div id="secret-modal" class="secret-modal hidden">
+    <div class="secret-modal-inner">
+      <button id="secret-close" class="close-x" aria-label="Close">×</button>
+      <p class="secret-eyebrow">Achievement Unlocked</p>
+      <h3>The Watcher</h3>
+      <p>You found the sequence. Most people never look this closely. Thank you for exploring — the universe grows when someone bothers to notice.</p>
+    </div>
+  </div>
+
+  <script src="assets/audio.js"></script>
+  <script src="script.js"></script>
+  <script src="games/astro-runner/script.js"></script>
 </body>
 </html>

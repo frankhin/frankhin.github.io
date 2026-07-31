@@ -210,11 +210,18 @@
   });
 
   /* ---------- Celestial navigation field ---------- */
+  const ICONS = {
+    games: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 20h4M16 18v4M28 21h.01M33 25h.01M12 30c-3 0-5-2.5-5-6.5S9.5 16 13 16h22c3.5 0 6 3.5 6 7.5S38.5 30 35.5 30c-2 0-3-1-4.5-3l-1.8-2.4a3 3 0 0 0-2.4-1.2h-5.6a3 3 0 0 0-2.4 1.2L16.5 27c-1.5 2-2.5 3-4.5 3Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    ideas: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8c-6.6 0-12 5.4-12 12 0 4.4 2.4 7.5 4.8 9.8.9.9 1.2 1.7 1.2 2.7V34h12v-1.5c0-1 .3-1.8 1.2-2.7C33.6 27.5 36 24.4 36 20c0-6.6-5.4-12-12-12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 39h8M21.5 43h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    projects: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6c4 3.5 9 10.5 9 18 0 3-1 6-2 8l-2-4h-10l-2 4c-1-2-2-5-2-8 0-7.5 5-14.5 9-18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="24" cy="19" r="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M17 30l-4 4v4l4-2M31 30l4 4v4l-4-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    secrets: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8l2.6 9.4L36 20l-9.4 2.6L24 32l-2.6-9.4L12 20l9.4-2.6L24 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M37 30l1 3.6L41.6 34l-3.6 1L37 38.6 36 35l-3.6-1L36 33l1-3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>'
+  };
+
   const CELESTIALS = [
-    { id: 'games', label: 'Games', emoji: '🎮', color: '77,168,255', size: 96, x: 0.24, y: 0.34 },
-    { id: 'ideas', label: 'Ideas', emoji: '💡', color: '139,92,246', size: 70, x: 0.72, y: 0.24 },
-    { id: 'projects', label: 'Projects', emoji: '🚀', color: '34,211,238', size: 110, x: 0.68, y: 0.68 },
-    { id: 'secrets', label: 'Hidden Secrets', emoji: '🌠', color: '245,243,255', size: 46, x: 0.28, y: 0.72 }
+    { id: 'games', label: 'Games', color: '77,168,255', size: 96, x: 0.24, y: 0.34 },
+    { id: 'ideas', label: 'Ideas', color: '139,92,246', size: 70, x: 0.72, y: 0.24 },
+    { id: 'projects', label: 'Projects', color: '34,211,238', size: 110, x: 0.68, y: 0.68 },
+    { id: 'secrets', label: 'Hidden Secrets', color: '245,243,255', size: 46, x: 0.28, y: 0.72 }
   ];
 
   function buildCelestialField() {
@@ -233,14 +240,21 @@
       body.className = 'celestial-body';
       body.style.width = c.size + 'px';
       body.style.height = c.size + 'px';
-      body.style.background = `radial-gradient(circle at 35% 30%, rgba(${c.color},0.95), rgba(${c.color},0.35) 60%, transparent 75%)`;
+      body.style.background = `radial-gradient(circle at 35% 30%, rgba(${c.color},0.5), rgba(${c.color},0.14) 60%, transparent 75%)`;
       body.style.boxShadow = `0 0 40px rgba(${c.color},0.5)`;
       body.style.animationDelay = (Math.random() * -9) + 's';
-      body.textContent = c.emoji;
+      body.style.color = `rgb(${c.color})`;
       body.style.display = 'flex';
       body.style.alignItems = 'center';
       body.style.justifyContent = 'center';
-      body.style.fontSize = (c.size * 0.36) + 'px';
+
+      const iconWrap = document.createElement('div');
+      iconWrap.className = 'celestial-icon';
+      iconWrap.style.width = (c.size * 0.44) + 'px';
+      iconWrap.style.height = (c.size * 0.44) + 'px';
+      iconWrap.style.filter = `drop-shadow(0 0 6px rgba(${c.color},0.85))`;
+      iconWrap.innerHTML = ICONS[c.id];
+      body.appendChild(iconWrap);
 
       const label = document.createElement('span');
       label.className = 'celestial-label';
@@ -251,43 +265,53 @@
       wrap.addEventListener('mouseenter', () => { if (window.FrankhinAudio) window.FrankhinAudio.playHover(); });
       wrap.addEventListener('click', () => {
         if (window.FrankhinAudio) window.FrankhinAudio.playClick();
-        enterSection(c.id);
+        goTo(c.id);
       });
-      wrap.addEventListener('keydown', (e) => { if (e.key === 'Enter') enterSection(c.id); });
+      wrap.addEventListener('keydown', (e) => { if (e.key === 'Enter') goTo(c.id); });
       field.appendChild(wrap);
     });
   }
 
   /* ---------- Section travel ---------- */
-  const sections = ['games', 'ideas', 'projects', 'secrets'];
+  // currentSection is null when the universe is showing, otherwise the id
+  // of the visible view. goTo() always hides whatever is CURRENTLY visible
+  // before showing the target — this is what fixes the bug where jumping
+  // from one section straight into another (e.g. Projects -> Games) used
+  // to leave both views stacked on top of each other, since the old code
+  // only ever knew how to hide the universe.
   let currentSection = null;
 
-  function enterSection(id) {
+  function goTo(targetId, after) {
     warpTo(() => {
-      universe.classList.add('hidden');
-      const view = document.getElementById('view-' + id);
-      view.classList.remove('hidden');
-      currentSection = id;
-      if (id === 'ideas') buildIdeas();
-      if (id === 'projects') buildProjects();
-    });
-  }
+      if (currentSection === 'games') unmountActiveGame();
 
-  function leaveSection() {
-    if (!currentSection) return;
-    warpTo(() => {
-      document.getElementById('view-' + currentSection).classList.add('hidden');
-      universe.classList.remove('hidden');
-      currentSection = null;
+      if (currentSection) {
+        document.getElementById('view-' + currentSection).classList.add('hidden');
+      } else {
+        universe.classList.add('hidden');
+      }
+
+      if (targetId === 'universe') {
+        universe.classList.remove('hidden');
+        currentSection = null;
+      } else {
+        document.getElementById('view-' + targetId).classList.remove('hidden');
+        currentSection = targetId;
+        if (targetId === 'ideas') buildIdeas();
+        if (targetId === 'projects') buildProjects();
+        if (targetId === 'games') buildGamePicker();
+      }
+
+      if (after) after();
     });
   }
 
   document.querySelectorAll('.back-btn').forEach((btn) => btn.addEventListener('click', () => {
     if (window.FrankhinAudio) window.FrankhinAudio.playClick();
-    leaveSection();
+    goTo('universe');
   }));
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && currentSection) leaveSection();
+    if (e.key === 'Escape' && currentSection) goTo('universe');
   });
 
   /* ---------- Ideas ---------- */
@@ -340,7 +364,7 @@
 
   /* ---------- Projects ---------- */
   const PROJECTS = [
-    { name: 'Astro Runner', desc: 'Browser game', color: '77,168,255', locked: false, action: () => enterSection('games') },
+    { name: 'Astro Runner', desc: 'Browser game', color: '77,168,255', locked: false, action: () => goTo('games', () => mountGame('astro-runner')) },
     { name: 'Business', desc: 'In orbit', color: '139,92,246', locked: true },
     { name: 'AI Projects', desc: 'Forming', color: '34,211,238', locked: true },
     { name: 'Websites', desc: 'Forming', color: '245,243,255', locked: true },
@@ -373,6 +397,74 @@
     });
   }
 
+  /* ---------- Games picker ---------- */
+  // Each game module registers itself into window.Games (see games/*/script.js)
+  // as { name, tagline, color, icon, mount(root), unmount() }. The picker below
+  // just reads that registry, so adding a new game never requires touching this file.
+  let activeGameId = null;
+
+  function buildGamePicker() {
+    const picker = document.getElementById('game-picker');
+    if (picker.dataset.built) return;
+    picker.dataset.built = '1';
+    const games = window.Games || {};
+    Object.keys(games).forEach((id) => {
+      const g = games[id];
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.style.setProperty('--accent', g.color);
+      card.style.color = `rgb(${g.color})`;
+
+      const icon = document.createElement('div');
+      icon.className = 'game-card-icon';
+      icon.innerHTML = g.icon || '';
+
+      const h4 = document.createElement('h4');
+      h4.style.color = 'var(--star-white)';
+      h4.textContent = g.name;
+
+      const p = document.createElement('p');
+      p.textContent = g.tagline || '';
+
+      card.appendChild(icon);
+      card.appendChild(h4);
+      card.appendChild(p);
+      card.addEventListener('mouseenter', () => { if (window.FrankhinAudio) window.FrankhinAudio.playHover(); });
+      card.addEventListener('click', () => {
+        if (window.FrankhinAudio) window.FrankhinAudio.playClick();
+        mountGame(id);
+      });
+      picker.appendChild(card);
+    });
+  }
+
+  function mountGame(id) {
+    const g = window.Games && window.Games[id];
+    if (!g) return;
+    unmountActiveGame();
+    activeGameId = id;
+    document.getElementById('game-picker').classList.add('ui-hidden');
+    const wrap = document.getElementById('game-mount-wrap');
+    wrap.classList.remove('ui-hidden');
+    g.mount(document.getElementById('game-mount'));
+  }
+
+  function unmountActiveGame() {
+    if (activeGameId && window.Games[activeGameId] && window.Games[activeGameId].unmount) {
+      window.Games[activeGameId].unmount();
+    }
+    activeGameId = null;
+    const mount = document.getElementById('game-mount');
+    if (mount) mount.innerHTML = '';
+    document.getElementById('game-mount-wrap').classList.add('ui-hidden');
+    document.getElementById('game-picker').classList.remove('ui-hidden');
+  }
+
+  document.getElementById('game-back').addEventListener('click', () => {
+    if (window.FrankhinAudio) window.FrankhinAudio.playClick();
+    unmountActiveGame();
+  });
+
   /* ---------- Hidden secret: Konami-style key sequence ---------- */
   const SECRET_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'];
   let seqProgress = 0;
@@ -392,12 +484,22 @@
   });
 
   /* ---------- Mute toggle ---------- */
-  muteBtn.textContent = '🔇'; // starts muted; visitor opts in to sound
+  const SOUND_ON_ICON = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M16.5 9a4.5 4.5 0 0 1 0 6M19 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  const SOUND_OFF_ICON = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+
+  function paintMuteBtn(isOn) {
+    muteBtn.innerHTML = isOn ? SOUND_ON_ICON : SOUND_OFF_ICON;
+    muteBtn.classList.toggle('is-on', isOn);
+    muteBtn.setAttribute('aria-label', isOn ? 'Mute ambient sound' : 'Unmute ambient sound');
+  }
+
+  paintMuteBtn(false); // starts muted; visitor opts in to sound
   muteBtn.addEventListener('click', () => {
     if (!window.FrankhinAudio) return;
+    window.FrankhinAudio.init();
     const nextMuted = !window.FrankhinAudio.isMuted();
     window.FrankhinAudio.setMuted(nextMuted);
-    muteBtn.textContent = nextMuted ? '🔇' : '🔊';
+    paintMuteBtn(!nextMuted);
   });
 
 })();

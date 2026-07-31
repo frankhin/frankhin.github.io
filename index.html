@@ -15,7 +15,7 @@
   <canvas id="space-canvas"></canvas>
 
   <!-- Mute toggle, always available once inside -->
-  <button id="mute-toggle" class="hud-btn hidden" aria-label="Toggle sound">🔇</button>
+  <button id="mute-toggle" class="hud-btn hidden" aria-label="Toggle sound"></button>
 
   <!-- ============ LANDING ============ -->
   <section id="landing" class="scene">
@@ -38,7 +38,13 @@
     <div class="section-inner games-inner">
       <h2 class="section-title">Games</h2>
       <p class="section-sub">A small diversion, built for the void.</p>
-      <div id="astro-runner-mount"></div>
+
+      <div id="game-picker" class="game-picker"></div>
+
+      <div id="game-mount-wrap" class="game-mount-wrap ui-hidden">
+        <button id="game-back" class="game-back-btn">‹ All games</button>
+        <div id="game-mount"></div>
+      </div>
     </div>
   </section>
 
@@ -90,5 +96,7 @@
   <script src="assets/audio.js"></script>
   <script src="script.js"></script>
   <script src="games/astro-runner/script.js"></script>
+  <script src="games/red-orb/script.js"></script>
+  <script src="games/comet-dash/script.js"></script>
 </body>
 </html>
